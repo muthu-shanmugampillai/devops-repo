@@ -1,0 +1,58 @@
+pipeline {
+    environment {
+        registry = "devopsolvendo/betygfi-backend-dev"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+    agent { label 'slave' }
+
+    stages {
+        stage('checkout') {
+            steps {
+                echo "checking out from ${params.devopsbranch} Branch"
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "${params.devopsbranch}"]],
+                    extensions: [],
+                    userRemoteConfigs: [[credentialsId: 'git-creds', url: 'git@gitlab.com:Deploysolvendo/devopsproject.git']]
+                ])
+                sh """
+                pwd
+                ls -ltra betygfi-nodejs-api
+                """
+            }
+        }
+
+        stage('build') {
+            steps {
+                echo "job is building"
+                sh """docker build --build-arg BRANCH=${params.codebranch} -t devopsolvendo/betygfi-backend-dev:$BUILD_NUMBER ."""
+            }
+        }
+         
+        stage('pushing image') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        sh """
+                        docker push devopsolvendo/betygfi-backend-dev:$BUILD_NUMBER
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('deploy') {
+            steps {
+                echo "job is deploying"
+              // sh "docker run -itd -p 4000:4000 devopsolvendo/betygfi-backend-dev:$BUILD_NUMBER"
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

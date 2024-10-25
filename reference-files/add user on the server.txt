@@ -1,0 +1,26 @@
+login with root usr
+
+cretae group called admin
+-sudo groupadd admin
+
+create user called solvendousr
+-sudo useradd  -m -s /bin/bash solvendousr
+-passwd solvendousr
+pass - $01veND0@10
+
+add user in group
+-usermod -aG admin solvendousr
+
+chmod 740 /etc/sudoers
+
+vi /etc/sudoers
+
+add this in the admin line
+%admin ALL=(ALL) NOPASSWD: ALL
+
+
+systemctl restart sshd
+
+su - solvendousr
+sudo -i
+$01veND0@10

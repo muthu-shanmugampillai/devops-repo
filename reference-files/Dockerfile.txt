@@ -1,0 +1,88 @@
+pipeline {
+    agent { label 'master' }
+    tools{nodejs "node"}
+    environment {
+        registry = "devopsolvendo/dev-betgyfi-frontend"
+        registryCredential = 'dockerhub'
+        // kubeconfig = '/root/.kube/config'
+    }
+
+    stages {
+        stage('checkout') {
+            steps {
+                echo "Checking out from branch"
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "dev"]],
+                    extensions: [],
+                    userRemoteConfigs: [[credentialsId: 'git-creds', url: 'https://gitlab.com/solvendo/betygfi-nextjs.git']]
+                ])
+                sh """
+                pwd
+                ls -ltra
+                """
+            }
+        }
+        stage(cleanup){
+          steps{
+            sh "docker system prune -af --volumes "
+          }
+        }
+
+        stage('build') {
+            steps {
+                echo "Building the frontend"
+                sh """
+                docker build -t devopsolvendo/dev-betgyfi-frontend:$BUILD_NUMBER .
+                """
+            }
+        }
+
+        stage('push image') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        sh """
+                        docker push devopsolvendo/dev-betgyfi-frontend:$BUILD_NUMBER
+                        """
+                    }
+                }
+            }
+        }
+    
+    stage('Delete old container') {
+            when {
+                expression { return params.DELETE_OLD_CONTAINER }
+            }
+            steps {
+                script {
+                    sh """
+                    containerID=\$(sshpass -p 'Solvendo@123' ssh -o StrictHostKeyChecking=no root@3.110.115.220  docker ps -a -q)
+                    echo "Below containers are running in 3.110.115.220" \$containerID
+                    sshpass -p 'Solvendo@123' ssh -o StrictHostKeyChecking=no root@3.110.115.220 'docker stop \$containerID'
+                    sshpass -p 'Solvendo@123' ssh -o StrictHostKeyChecking=no root@3.110.115.220 'docker rm \$containerID'
+                    """
+                }
+            }
+        }
+        stage('Deploy') {
+    steps {
+        script {
+            sh """
+            sshpass -p 'Solvendo@123' ssh -o StrictHostKeyChecking=no root@3.110.115.220 sudo docker system prune -af --volumes
+            """
+           sh """
+                    sshpass -p 'Solvendo@123' ssh -o StrictHostKeyChecking=no root@3.110.115.220 \
+                     sudo docker run -d -p 7000:7000 devopsolvendo/dev-betgyfi-frontend:$BUILD_NUMBER
+                  """
+
+        }
+    }
+}
+}
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

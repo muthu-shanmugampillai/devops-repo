@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Install Git
+sudo yum install git -y
+
+# Install Node.js and npm (if not already installed)
+pm2 delete 0
+sudo yum remove -y nodejs
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo yum install -y nodejs
+rm -rf /root/betygfi-nodejs-apis
+
+# Prompt the user for the branch name
+read -p "Enter the name of the branch to clone: " branch_name
+
+# Check if the branch name is provided
+if [[ -n "$branch_name" ]]; then
+  # Clone the repository based on the user's input
+  git clone --single-branch --branch "$branch_name" git@gitlab.com:solvendo/betygfi-nodejs-apis.git
+
+  # Continue with the rest of your script
+  if [ -d "betygfi-nodejs-apis" ]; then
+    cp -r /root/config.js /root/betygfi-nodejs-apis/config.js
+    cd betygfi-nodejs-apis
+    npm install
+    npm install pm2 -g
+    pm2 start index.js
+  else
+    echo "Error: Failed to clone the repository. Make sure the branch name is correct."
+  fi
+else
+  echo "Error: Branch name not provided. Please enter a branch name to clone the repository."
+fi

@@ -1,0 +1,35 @@
+------------------Install and Secure Redis on Ubuntu--------------
+
+
+
+1. sudo apt update
+
+2. sudo apt install redis-server
+
+3. sudo vi /etc/redis/redis.conf
+
+   - esc : se nu
+   - in line number 327 have to add this <supervised systemd>
+   - esc : wq!
+
+4. sudo systemctl restart redis.service
+
+5. sudo systemctl status redis
+
+Output
+● redis-server.service - Advanced key-value store
+   Loaded: loaded (/lib/systemd/system/redis-server.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2018-06-27 18:48:52 UTC; 12s ago
+     Docs: http://redis.io/documentation,
+           man:redis-server(1)
+  Process: 2421 ExecStop=/bin/kill -s TERM $MAINPID (code=exited, status=0/SUCCESS)
+  Process: 2424 ExecStart=/usr/bin/redis-server /etc/redis/redis.conf (code=exited, status=0/SUCCESS)
+ Main PID: 2445 (redis-server)
+    Tasks: 4 (limit: 4704)
+   CGroup: /system.slice/redis-server.service
+           └─2445 /usr/bin/redis-server 127.0.0.1:6379
+. . .
+
+6. redis-cli ping
+
+7.If Redis is running correctly, it will return: PONG

@@ -1,0 +1,27 @@
+-----------build given by rajesh----------
+ 
+1. login to server 
+2. copy the zip from local to server
+3. unzip the file 
+4. cd /etc/nginx/ninx.conf in that file it will mention where 
+   we want to paste the upzip files
+  for linux::/usr/share/nginx/html
+  for ubuntu::/var/www/html
+
+there is some error.html files are in the below of root
+delete those two line and add this cmd 
+
+location / {
+      try_files $uri $uri.html $uri/ =404;
+  }
+
+5. make sure there nothing in the folder .if anything is there
+   delete all those files first copy the this file
+
+6. all process is get over 
+
+systemctl restart nginx
+
+
+
+cp -r /root/* /usr/share/nginx/html/

@@ -1,0 +1,26 @@
+for no space left error in build stage
+
+1.connect jenkins slave server
+
+2.cd /var/lib/docker/volumes
+
+3.docker volume rm $(docker volume ls -qf dangling=true)
+
+4.build again
+
+
+
+
+
+
+
+ stage(cleanup){
+          steps{
+            sh "docker system prune -af --volumes "
+          }
+        }
+
+
+
+
+docker system prune -af --volumes

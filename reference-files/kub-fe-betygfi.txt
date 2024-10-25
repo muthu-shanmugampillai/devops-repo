@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: betygfi-frontend-deployment
+  name: betygfi-frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: betygfi-frontnd-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: betygfi-frontend-deployment
+    spec:
+      containers:
+      - image: devopsolvendo/betygfi-frontend-dev:1
+        name: frontend
+        resources: {}
+status: {}
+
+
+
+
+
+
+
+serivice...................................................................
+
+
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: betygfi-frontend-service
+  namespace: frontend
+spec:
+  selector:
+    app: betygfi-frontend-deployment
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+
+
+
+
+
+this link for betygfi frontend
+
+http://a9a0636362f344854bd1e2504d4f2cee-407841233.ap-south-1.elb.amazonaws.com/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

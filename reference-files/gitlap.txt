@@ -1,0 +1,18 @@
+lsgit -----------push files from server to gitlap-----------------
+
+
+1. clone the repo from gitlap using git clone cmd
+
+2. do the change what u want.
+
+3. goto the modified path and give git add cmd
+
+ git add .
+
+4.then git commit
+
+git commit -m "add new files in helm"
+
+5. then git push
+
+git push origin HEAD:master

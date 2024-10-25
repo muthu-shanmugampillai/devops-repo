@@ -1,0 +1,23 @@
+domain mapping on godaddy
+
+
+1. login to godaddy account
+2. click on the your name
+3. click account setting
+4. click delicated access
+5. then click DNS
+6. then search for domain eg.betygfi.com
+7. click on the domain what u search
+8. click add records
+9. select TXT and add the acme and value and time 600
+ 
+
+
+after tls creation 
+
+filter A host
+
+give name of the domain and public ip and click ok 
+
+then domain mapping is done
+  

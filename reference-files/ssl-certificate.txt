@@ -1,0 +1,6 @@
+sudo certbot certonly --manual --preferred-challenges=dns --email deploy@solvendo.io --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d kube.betygfi.com -d kubestudio.betygfi.com -d kubecommunity.betygfi.com -d kubenotificationapi.betygfi.com
+
+
+
+kubectl create secret tls tls-secret --cert=/opt/certificate-prod/fullchain.pem --key=/opt/certificate-prod/privkey.pem -n prod-betygfi
+

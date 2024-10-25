@@ -1,0 +1,32 @@
+FROM node:16
+RUN mkdir /root/.ssh
+
+
+# Copy the private key from the build context to the image
+COPY my-ssh-keys/* /root/.ssh/
+
+RUN ls -ltr /root/.ssh
+
+RUN chmod -R 600 /root/.ssh/
+
+
+# Rest of your Dockerfile
+
+
+RUN git clone --single-branch --branch dev git@gitlab.com:solvendo/betygfi-nodejs-apis.git
+
+RUN npm install -g npm@8.19.4
+
+RUN npm install -g pm2
+
+CMD ["pm2","start", "index.js"]
+
+
+
+
+
+
+
+
+3.110.115.220
+

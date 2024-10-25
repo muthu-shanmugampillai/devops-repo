@@ -1,0 +1,37 @@
+to do modification in configweb
+dev-4000
+qa-4001
+prod-4002
+
+1. http://52.66.250.16:4000/api-docs
+
+2. click on Get -> try it out -> execute
+
+3. then copy the string what you want to change 
+
+  eg :BETYGFI_S3_ACCESS_KEY_ID
+  
+4. then click on PUT -> try it out .now you can see the body block
+
+  eg : {
+  "key": "string",
+  "value": "string",
+  "threshold": 0
+}
+
+
+in key you need add the BETYGFI_S3_ACCESS_KEY_ID
+i values you need to add what value you want to add
+
+eg :  {
+  "key": "BETYGFI_S3_ACCESS_KEY_ID",
+  "value": "m3r9vN6ZCqXly869T2Q4On1OtMMRkIaTZ3w+fPQ1",
+  "threshold": 0
+}
+
+
+5. then press EXCUTE 
+
+6. then check the change what you did is avilabe or not 
+
+http://52.66.250.16:4000/config/

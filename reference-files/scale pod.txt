@@ -1,0 +1,21 @@
+no space left error in te new jenkins
+
+
+
+run this cmd : "docker system prune -af --volumes"
+
+push docker image from local to dockerhub with tag
+
+-> docker login
+-> docker tag base-image-betygfi-frontend:v1 devopsolvendo/base-image-betygfi-frontend:v1
+-> docker push devopsolvendo/base-image-betygfi-frontend:v1
+
+
+
+
+to add reciplca count in pod us=e the below cmd 
+
+
+kubectl get deployment -n <namespace-name>
+
+kubectl scale deployment <deployment-name> --replicas=2 -n <namespace-name>

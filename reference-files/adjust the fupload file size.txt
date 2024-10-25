@@ -1,0 +1,24 @@
+if u want increase the size of file upload
+
+
+1. login in esds cluster
+
+2. go into ingress pod 
+
+ -> kubectl exec -it <pod-name> -n <namespace-name> /bin/bash
+
+3. now 
+   
+    -> vi nginx.conf
+
+4. search "max client body"
+
+5.adjust the size based on ur need
+
+6. once all thing done save and exit(esc:wq!) from nginx.conf file
+
+7. then reload nginx
+
+   -> nginx -s reload
+
+8. exit from pod....

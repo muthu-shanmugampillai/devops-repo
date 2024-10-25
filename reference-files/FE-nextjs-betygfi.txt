@@ -1,0 +1,47 @@
+how to make nextjs-frontend to dockerimage:::
+
+install node 16 
+install git
+install nginx
+
+
+
+step 1:create a directory and clone the nextjs file into that 
+step 2:then go into the cloned directory
+step 3:type npm install
+            npm run build:dev cmd
+step 4:after the build get success new directory creater called "out"
+step 5:create dockerfile in the nextjs application directory and below code is sample 
+       this code belongs to betygfi frontend
+
+# Use the Nginx base image from your Docker Hub repository
+FROM devopsolvendo/solvendo-baseimage:2
+
+# Create the "nginx" system user
+RUN useradd -r nginx
+
+# Set the working directory to root
+WORKDIR /usr/share/nginx/html/
+
+# Remove any existing content in the Nginx HTML directory
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy the contents of the Next.js 'out' directory to the Nginx HTML directory
+COPY ./out/ .
+
+# Change the ownership of the copied files to the "nginx" user
+RUN chown -R nginx:nginx /usr/share/nginx/html/*
+
+# Copy your updated nginx.conf file to the appropriate location in the container
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose the default Nginx port (usually 80)
+EXPOSE 8080
+
+# Command to start Nginx
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+
+step 6: navigate to /etc/nginx/nginx.conf this path and copy the file i the dockerfile
+step 7: and also copy all file into dockerfile which are in the out folder
+step 8: then build docker image and docker run

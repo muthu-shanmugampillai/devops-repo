@@ -1,0 +1,17 @@
+-------------for kops cluster--------------
+ 
+
+run this cmds 
+
+
+1. export KOPS_STATE_STORE=s3://dev.k8s.solvendo.io
+
+2. kops export kubeconfig --admin
+
+
+52.66.250.16-old ip for betygfi-frontend
+
+13.234.77.190-old ip for community
+
+
+13.201.172.63 - QA.bet

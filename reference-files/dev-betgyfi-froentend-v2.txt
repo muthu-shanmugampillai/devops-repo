@@ -1,0 +1,12 @@
+pipeline {
+    agent {label 'master'}
+    stages{
+    stage('Deploy Container'){
+        steps{
+              sh """
+              sshpass -p Solvendo@123 ssh -o StrictHostKeyChecking=no root@3.110.115.220  rm -rf /root/betygfi-nextjs
+              sshpass -p Solvendo@123 ssh -o StrictHostKeyChecking=no root@3.110.115.220 '/bin/bash /opt/deploy.sh ${params.branch} '
+                 """
+                 
+       
+    }}}}

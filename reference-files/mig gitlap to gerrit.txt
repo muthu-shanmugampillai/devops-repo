@@ -1,0 +1,25 @@
+# Clone the GitLab repository
+git clone --mirror https://gitlab.example.com/username/repo.git
+
+git remote add gerrit "http://gerrit.solvendo.io/betygfi-app-config-apis"  
+
+
+cd betygfi-app..
+
+
+
+eg :  mkdir -p `git rev-parse --git-dir`/hooks/ && curl -Lo `git rev-parse --git-dir`/hooks/commit-msg http://gerrit.solvendo.io/tools/hooks/commit-msg && chmod +x `git rev-parse --git-dir`/hooks/commit-msg
+
+
+
+
+
+
+git push gerrit --all
+Link https://gitlab.com/adityaag00/betygfi-... by Mathu Soothana Perumal S
+
+
+
+
+https://gitlab.com/adityaag00/betygfi-exchange-adapters/-/project_members
+has context menu

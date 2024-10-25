@@ -1,0 +1,43 @@
+----------------------install node exporter--------------------
+
+cd /tmp
+wget https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+tar xvfz node_exporter-*.*-amd64.tar.gz
+sudo mv node_exporter-*.*-amd64/node_exporter /usr/local/bin/
+sudo useradd -rs /bin/false node_exporter
+sudo vi /etc/systemd/system/node_exporter.service
+
+[Unit]
+Description=Node Exporter
+After=network.target
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl daemon-reload
+sudo systemctl enable node_exporter
+sudo systemctl start node_exporter
+sudo systemctl status node_exporter
+
+---------------deploy---------------------
+
+kubectl delete configmap prometheus-server-conf -n monitoring
+
+rm -rf config-map.yaml
+ 
+touch config-map.yaml
+
+vi config-map.yaml
+
+kubectl create -f config-map.yaml
+
+kubectl get pod -n monitoring
+
+kubectl delete pod <pod-name> -n monitoring
+ 
+
+

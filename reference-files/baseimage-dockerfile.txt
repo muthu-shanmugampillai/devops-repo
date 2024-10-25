@@ -1,0 +1,102 @@
+FROM ubuntu:latest
+
+# Set environment variables to accept the OpenJDK 17 license
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install necessary packages
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    gnupg \
+    curl
+
+# Add the Node.js 16 repository and install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
+# Install npm using Node.js's package manager (npm)
+#RUN npm install -g npm@latest
+
+# Continue with other installations
+RUN apt-get install -y \
+    git \
+    openjdk-17-jdk \
+    wget \
+    curl \
+    nginx
+
+# Install Docker
+RUN apt-get update && apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+RUN apt-get update && apt-get install -y docker-ce
+RUN apt-get update && apt-get install -y ansible
+# Install Apache Maven
+RUN apt-get update && apt-get install -y maven
+
+# Create the SSH directory in /root
+# RUN mkdir -p /root/.ssh
+
+# Copy your SSH public and private keys to the container
+ADD id_rsa /root/.ssh/id_rsa
+ADD id_rsa.pub /root/.ssh/id_rsa.pub
+
+# Set permissions on the SSH directory and files
+RUN chmod 700 /root/.ssh
+RUN chmod 600 /root/.ssh/id_rsa
+
+# Add GitLab's SSH host key to known_hosts
+ADD known_hosts /root/.ssh/known_hosts
+
+WORKDIR /root/testing
+
+# Clone the Git repository from GitLab using SSH
+RUN git clone -b dev git@gitlab.com:solvendo/betygfi-nodejs-apis.git
+
+# Install Apache Tomcat
+RUN apt-get install -y tomcat9
+
+# Configure Tomcat (e.g., if you need to deploy a WAR file)
+# COPY your_war_file.war /var/lib/tomcat9/webapps/your_war_file.war
+
+# Define the working directory
+# WORKDIR /root/test
+RUN ls -la /root/testing
+RUN apt-get update && apt-get install -y ansible
+
+# Install Apache Maven
+RUN apt-get update && apt-get install -y maven
+# Create the SSH directory in /root
+# RUN mkdir -p /root/.ssh
+
+# Copy your SSH public and private keys to the container
+ADD id_rsa /root/.ssh/id_rsa
+ADD id_rsa.pub /root/.ssh/id_rsa.pub
+
+# Set permissions on the SSH directory and files
+RUN chmod 700 /root/.ssh
+RUN chmod 600 /root/.ssh/id_rsa
+
+# Add GitLab's SSH host key to known_hosts
+ADD known_hosts /root/.ssh/known_hosts
+
+WORKDIR /root/clone
+
+# Clone the Git repository from GitLab using SSH
+RUN git clone -b dev git@gitlab.com:solvendo/betygfi-nodejs-apis.git
+
+# Install Apache Tomcat
+RUN apt-get install -y tomcat9
+
+# Configure Tomcat (e.g., if you need to deploy a WAR file)
+# COPY your_war_file.war /var/lib/tomcat9/webapps/your_war_file.war
+
+# Define the working directory
+# WORKDIR /root/test
+RUN ls -la /root/clone
+# Command to run when the container starts
+CMD ["/bin/bash"]

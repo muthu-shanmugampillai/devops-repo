@@ -1,0 +1,32 @@
+3.110.115.220 -dev-betygfi-frontend-dev.betygfi.com
+15.207.71.9 -dev-betygfi-api-dev.betygfi.com
+ 
+3.25.71.97 - dev-community-devcommunity.betygfi.com
+54.206.193.30 -dev-studio-devstudio.betygfi.com
+ 
+ 
+15.207.95.99 -prod-betygfi-frontend-betygfi.com
+15.206.18.69 -prod-betygfi-api-betygfi.com
+ 
+ 
+13.233.123.39  -prod-community-community.betygfi.com
+65.2.168.197 -prod-studio-studio.betygfi.com
+ 
+3.108.255.176 -qa-betygfi-frontend-qa.betygfi.com
+3.109.191.157 -qa-betygfi-api-qa.betygfi.com
+ 
+ 
+54.206.111.34 -qa-community-qacommunity.betygfi.com
+13.239.113.18 -qa-studio-qastudio.betygfi.com
+ 
+ 
+3.6.131.217 -dev-frontend cirp
+65.2.88.86 -dev-backend cirp
+
+
+
+15.207.71.9 - adapater
+15.207.71.9 - dimension
+
+
+3.27.192.255 - betygfi-llm
