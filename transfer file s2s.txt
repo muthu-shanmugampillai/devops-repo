@@ -1,0 +1,14 @@
+--------copy directory from one server to another---------
+
+1. make the directory as tar file
+ 
+    -> tar -zcf <directory>.tar.gz .
+    -> ls -ltr
+
+2. scp <directory>.tar.gz root@<receiver-ip>:/path
+ 
+3. after this it ask the receiver-ip password
+
+4. if u want to untar the file 
+
+    -> tar -xzf filename.tar.gz
