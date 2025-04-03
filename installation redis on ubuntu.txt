@@ -1,0 +1,45 @@
+Install on Ubuntu/Debian
+
+Add the repository to the APT index, update it, and install Redis:
+
+sudo apt-get install lsb-release curl gpg
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+sudo chmod 644 /usr/share/keyrings/redis-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+sudo apt-get update
+sudo apt-get install redis
+
+
+sudo systemctl enable redis-server
+sudo systemctl start redis-server
+
+
+testing 
+
+root@pineconedb1:~# redis-cli ping
+PONG
+
+to setup username and password 
+
+sudo vi /etc/redis/redis.conf
+
+add this on under SECURITY  section
+
+user <username> on ><password> ~* +@all
+
+eg: user admin on >Solvendo@123 ~* +@all
+
+then restart the service:
+
+sudo systemctl restart redis-server
+
+
+redis-cli
+auth admin Solvendo@123
+
+If successful, it returns:
+
+OK
+
+
+

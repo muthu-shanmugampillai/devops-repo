@@ -1,0 +1,68 @@
+
+note: officialy minio docs 
+
+https://min.io/docs/minio/linux/index.html
+
+
+
+
+🚀 Install and Configure MinIO on Ubuntu
+This guide will help you set up MinIO Object Storage as a systemd service on an Ubuntu server.
+
+🔹 Step 1: Download and Install MinIO
+
+
+--> wget https://dl.min.io/server/minio/release/linux-amd64/archive/minio_20250312180418.0.0_amd64.deb -O minio.deb
+sudo dpkg -i minio.deb
+
+
+🔹 Step 2: Create MinIO Storage Directory
+MinIO requires a storage directory. Create it in your home directory:
+
+--> mkdir ~/minio
+
+
+
+🔹 Step 3: Create a Systemd Service for MinIO
+Create a new systemd service file for MinIO:
+
+-->sudo vi /etc/systemd/system/minio.service
+
+Paste the following content into the file:
+
+[Unit]
+Description=MinIO Object Storage
+After=network.target
+
+[Service]
+User=root
+Environment="MINIO_ROOT_USER=admin"
+Environment="MINIO_ROOT_PASSWORD=$01veND0@10"
+ExecStart=/usr/local/bin/minio server /root/minio --console-address :9001
+Restart=always
+WorkingDirectory=/root/minio
+
+[Install]
+WantedBy=multi-user.target
+
+
+📌 Note: Replace admin and $01veND0@10 with your preferred username and strong password.
+
+Save and exit (ESC, then type :wq!, and press Enter).
+
+🔹 Step 4: Enable and Start MinIO
+Reload systemd to apply the changes and start MinIO:
+
+-->sudo systemctl daemon-reload
+-->sudo systemctl enable --now minio
+-->sudo systemctl status minio
+
+
+http://<your-server-ip>:9001
+
+✅ MinIO is Now Installed and Running as a Systemd Service! 🎉
+Let me know if you need any modifications! 🚀
+
+
+
+

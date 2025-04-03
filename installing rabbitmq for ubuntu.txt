@@ -1,0 +1,46 @@
+***********installing rabbitmq in ubuntu server***********
+
+1. apt-get update 
+2. apt-get -y upgrade
+3. echo "deb http://www.rabbitmq.com/debian/ testing main" >> /etc/apt/sources.list
+4. curl http://www.rabbitmq.com/rabbitmq-signing-key-public.asc | sudo apt-key add -
+5. apt-get update
+6. sudo apt-get install rabbitmq-server
+7. sudo vi /etc/default/rabbitmq-server
+   remove # in limit line then save it
+8. sudo rabbitmq-plugins enable rabbitmq_management
+ 
+add user :
+
+sudo rabbitmqctl add_user your_username your_password
+sudo rabbitmqctl set_user_tags your_username administrator
+sudo rabbitmqctl set_permissions -p / your_username ".*" ".*" ".*"
+
+eg for add user:
+
+sudo rabbitmqctl add_user muthu muthuss@123
+sudo rabbitmqctl set_user_tags muthu administrator
+sudo rabbitmqctl set_permissions -p / muthu ".*" ".*" ".*"
+
+
+
+after this is get over then check the rabbitmq is working are not:
+
+http://your_server_ip:15672
+
+eg:
+
+http:13.127.162.156:15672
+
+---------------------------------------------------------------------------------
+install rabbitmq using docker
+
+docker run -d --name rabbitmq-prod \
+  -p 5672:5672 \
+  -p 15672:15672 \
+  -e RABBITMQ_DEFAULT_USER=admin \
+  -e RABBITMQ_DEFAULT_PASS=Solvendo@123 \
+  rabbitmq:3.9.13-management
+  
+  
+  note : change the vesrion based on your need
